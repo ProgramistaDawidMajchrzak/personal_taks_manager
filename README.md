@@ -6,6 +6,7 @@ UI implemented by figma project created by Jenelle Miller. [LINK](https://www.fi
 
 In the project I used MVVM pattern, build the structure such as:
 
+```
 lib/
 ├── models/
 ├── services/
@@ -13,5 +14,6 @@ lib/
 ├── views/
 ├── widgets/
 └── main.dart
+```
 
 ## Getting Started
