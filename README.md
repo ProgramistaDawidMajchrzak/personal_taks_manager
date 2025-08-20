@@ -13,6 +13,7 @@ lib/
 ├── viewmodels/
 ├── views/
 ├── widgets/
+├── database/
 └── main.dart
 ```
 
