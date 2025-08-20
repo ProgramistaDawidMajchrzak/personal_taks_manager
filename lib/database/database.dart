@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:personal_task_manager/database/task_dao.dart';
 
 part 'database.g.dart';
 
@@ -13,11 +14,8 @@ class Tasks extends Table {
   BoolColumn get isDone => boolean().withDefault(Constant(false))();
 }
 
-@DriftDatabase(tables: [Tasks])
+@DriftDatabase(tables: [Tasks], daos: [TaskDao])
 class AppDatabase extends _$AppDatabase {
-  // After generating code, this class needs to define a `schemaVersion` getter
-  // and a constructor telling drift where the database should be stored.
-  // These are described in the getting started guide: https://drift.simonbinder.eu/setup/
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
@@ -27,11 +25,8 @@ class AppDatabase extends _$AppDatabase {
     return driftDatabase(
       name: 'tasks_database',
       native: const DriftNativeOptions(
-        // By default, `driftDatabase` from `package:drift_flutter` stores the
-        // database files in `getApplicationDocumentsDirectory()`.
         databaseDirectory: getApplicationSupportDirectory,
       ),
-      // If you need web support, see https://drift.simonbinder.eu/platforms/web/
     );
   }
 }
