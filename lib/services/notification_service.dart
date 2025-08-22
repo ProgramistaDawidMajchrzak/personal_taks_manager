@@ -40,4 +40,26 @@ class NotificationService {
         >()
         ?.requestNotificationsPermission();
   }
+
+  Future<void> showNotification({
+    required int id,
+    required String title,
+    required String body,
+  }) async {
+    await _plugin.show(
+      1,
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'instant_notification_channel_id',
+          'Instant Notifications',
+          channelDescription: 'Instant Channel Description',
+          importance: Importance.max,
+          priority: Priority.max,
+        ),
+        iOS: DarwinNotificationDetails(),
+      ),
+    );
+  }
 }
