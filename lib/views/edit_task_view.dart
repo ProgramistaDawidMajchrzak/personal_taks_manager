@@ -65,7 +65,7 @@ class _EditTaskViewState extends State<EditTaskView> {
                 final notificationService = NotificationService();
                 await notificationService.init();
                 await notificationService.showNotification(
-                  id: widget.task.id ?? 0,
+                  id: widget.task.id,
                   title: widget.task.title,
                   body: "30 mins left !",
                 );
