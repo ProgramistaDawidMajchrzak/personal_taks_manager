@@ -17,10 +17,10 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
 
   final db = AppDatabase();
-  final taskService = TaskService(db.taskDao);
+  final taskService = TaskService(db.taskDao, notificationService);
 
   // taskService.watchAllTasksSorted().listen((tasks) {
-  //   print("STREAM TEST: ${tasks.length} tasks");
+  //   print("${tasks.length} tasks");
   //   for (var t in tasks) {
   //     print("${t.id} - ${t.title} - ${t.deadline}");
   //   }

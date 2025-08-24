@@ -15,17 +15,13 @@ class StatsViewModel extends ChangeNotifier {
 
   void _observeTasks() {
     _taskService.watchAllTasksSorted().listen((tasks) {
-      print("TASKS FROM SERVICE: ${tasks.length}");
-      for (var t in tasks) {
-        print("${t.id} - ${t.title} - ${t.deadline}");
-      }
       _allTasks =
           tasks.map((t) {
             final catIndex = t.category;
             final cat =
                 (catIndex >= 0 && catIndex < model.TaskCategory.values.length)
                     ? model.TaskCategory.values[catIndex]
-                    : model.TaskCategory.values[0]; // domyślna kategoria
+                    : model.TaskCategory.values[0];
             return model.Task(
               id: t.id,
               title: t.title,
@@ -35,18 +31,13 @@ class StatsViewModel extends ChangeNotifier {
               isDone: t.isDone,
             );
           }).toList();
-
-      print("ALL TASKS AFTER MAPPING: ${_allTasks.length}");
-      for (var t in _allTasks) {
-        print("${t.id} - ${t.title} - ${t.deadline}");
-      }
       notifyListeners();
     });
   }
 
   DateTime _startOfWeek(DateTime date) {
     final monday = date.subtract(Duration(days: date.weekday - 1));
-    return DateTime(monday.year, monday.month, monday.day); // 00:00:00
+    return DateTime(monday.year, monday.month, monday.day);
   }
 
   DateTime _endOfWeek(DateTime date) {

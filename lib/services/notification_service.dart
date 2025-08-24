@@ -35,6 +35,7 @@ class NotificationService {
         >()
         ?.requestPermissions(alert: true, badge: true, sound: true);
 
+    // Android 13+
     await _plugin
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
@@ -63,5 +64,39 @@ class NotificationService {
         iOS: DarwinNotificationDetails(),
       ),
     );
+  }
+
+  Future<void> scheduleTaskNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime taskDeadline,
+  }) async {
+    final scheduledTime = taskDeadline.subtract(const Duration(minutes: 30));
+
+    if (scheduledTime.isBefore(DateTime.now())) return;
+
+    await _plugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'task_reminder_channel_id',
+          'Task Reminders',
+          channelDescription: 'Reminders for tasks',
+          importance: Importance.max,
+          priority: Priority.high,
+          icon: '@drawable/ic_notification',
+        ),
+        iOS: DarwinNotificationDetails(),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+
+  Future<void> cancelNotification(int id) async {
+    await _plugin.cancel(id);
   }
 }
