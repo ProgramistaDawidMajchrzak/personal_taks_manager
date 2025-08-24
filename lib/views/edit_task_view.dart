@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:personal_task_manager/services/notification_service.dart';
 import 'package:personal_task_manager/widgets/custom_app_bar.dart';
 import 'package:personal_task_manager/widgets/custom_button.dart';
 import 'package:personal_task_manager/widgets/custom_date_input.dart';
@@ -59,6 +60,19 @@ class _EditTaskViewState extends State<EditTaskView> {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomButton(
+              text: "Dev Notif Test",
+              onPressed: () async {
+                final notificationService = NotificationService();
+                await notificationService.init();
+                await notificationService.showNotification(
+                  id: widget.task.id ?? 0,
+                  title: widget.task.title,
+                  body: "30 mins left !",
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+            CustomButton(
               text: "Delete",
               onPressed: () async {
                 final vm = context.read<TaskViewModel>();
@@ -95,6 +109,7 @@ class _EditTaskViewState extends State<EditTaskView> {
           ],
         ),
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),

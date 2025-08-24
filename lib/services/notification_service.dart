@@ -11,8 +11,9 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation('Europe/Warsaw'));
 
     const androidSettings = AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
+      '@drawable/ic_notification',
     );
+
     const DarwinInitializationSettings iosSettings =
         DarwinInitializationSettings();
 
@@ -57,6 +58,7 @@ class NotificationService {
           channelDescription: 'Instant Channel Description',
           importance: Importance.max,
           priority: Priority.max,
+          icon: '@drawable/ic_notification',
         ),
         iOS: DarwinNotificationDetails(),
       ),
