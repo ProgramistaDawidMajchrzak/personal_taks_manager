@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <application
-        android:label="personal_task_manager"
+        android:label="Tasks Bro"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
