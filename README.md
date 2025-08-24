@@ -32,7 +32,7 @@ Features
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/personal_task_manager.git
+   git clone https://github.com/ProgramistaDawidMajchrzak/personal_taks_manager.git
    cd personal_task_manager
    flutter pub get
    ```
