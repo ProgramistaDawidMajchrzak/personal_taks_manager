@@ -36,8 +36,8 @@ class DateInputField extends StatelessWidget {
             DateTime? pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: today,
-              // firstDate: DateTime(2010),
+              // firstDate: today,
+              firstDate: DateTime(2010),
               lastDate: DateTime(2100),
             );
 

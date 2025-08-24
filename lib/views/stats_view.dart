@@ -38,8 +38,10 @@ class _StatsViewState extends State<StatsView> {
                 SizedBox(
                   height: 200,
                   child:
-                      data.isEmpty
-                          ? const Center(child: Text("No task"))
+                      statsVM.allTasks.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : data.isEmpty
+                          ? const Center(child: Text("No task this week"))
                           : PieChart(
                             PieChartData(
                               sections: [
@@ -47,7 +49,7 @@ class _StatsViewState extends State<StatsView> {
                                   PieChartSectionData(
                                     value: completed.toDouble(),
                                     color: const Color(0xFF4A3780),
-                                    title: '$completed',
+                                    title: '$completed DONE',
                                     radius: 60,
                                     titleStyle: const TextStyle(
                                       color: Colors.white,
@@ -64,7 +66,7 @@ class _StatsViewState extends State<StatsView> {
                                       12,
                                       0,
                                     ),
-                                    title: '${data.length - completed}',
+                                    title: '$pending TO DO',
                                     radius: 60,
                                     titleStyle: const TextStyle(
                                       color: Colors.white,

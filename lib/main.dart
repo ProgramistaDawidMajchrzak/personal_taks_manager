@@ -18,6 +18,13 @@ Future<void> main() async {
 
   final db = AppDatabase();
   final taskService = TaskService(db.taskDao);
+
+  // taskService.watchAllTasksSorted().listen((tasks) {
+  //   print("STREAM TEST: ${tasks.length} tasks");
+  //   for (var t in tasks) {
+  //     print("${t.id} - ${t.title} - ${t.deadline}");
+  //   }
+  // });
   final weatherService = WeatherService();
 
   await notificationService.init();

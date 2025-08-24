@@ -27,11 +27,12 @@ class TaskService {
     await _taskDao.updateTask(task);
   }
 
-  //get sorted by deadline
   Stream<List<Task>> watchAllTasksSorted() {
-    return (_taskDao.watchAllTasks()..map(
-      (tasks) => tasks..sort((a, b) => a.deadline.compareTo(b.deadline)),
-    ));
+    return _taskDao.watchAllTasks().map((tasks) {
+      final sorted = List<Task>.from(tasks);
+      sorted.sort((a, b) => a.deadline.compareTo(b.deadline));
+      return sorted;
+    });
   }
 
   Future<void> toggleDone(Task task) {

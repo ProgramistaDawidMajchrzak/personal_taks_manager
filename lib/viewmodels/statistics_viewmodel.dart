@@ -11,55 +11,68 @@ class StatsViewModel extends ChangeNotifier {
     _observeTasks();
   }
 
+  List<model.Task> get allTasks => _allTasks;
+
   void _observeTasks() {
     _taskService.watchAllTasksSorted().listen((tasks) {
+      print("TASKS FROM SERVICE: ${tasks.length}");
+      for (var t in tasks) {
+        print("${t.id} - ${t.title} - ${t.deadline}");
+      }
       _allTasks =
           tasks.map((t) {
+            final catIndex = t.category;
+            final cat =
+                (catIndex >= 0 && catIndex < model.TaskCategory.values.length)
+                    ? model.TaskCategory.values[catIndex]
+                    : model.TaskCategory.values[0]; // domyślna kategoria
             return model.Task(
               id: t.id,
               title: t.title,
-              category: model.TaskCategory.values[t.category],
+              category: cat,
               deadline: t.deadline,
               note: t.note,
               isDone: t.isDone,
             );
           }).toList();
 
+      print("ALL TASKS AFTER MAPPING: ${_allTasks.length}");
+      for (var t in _allTasks) {
+        print("${t.id} - ${t.title} - ${t.deadline}");
+      }
       notifyListeners();
     });
   }
 
+  DateTime _startOfWeek(DateTime date) {
+    final monday = date.subtract(Duration(days: date.weekday - 1));
+    return DateTime(monday.year, monday.month, monday.day); // 00:00:00
+  }
+
+  DateTime _endOfWeek(DateTime date) {
+    final sunday = _startOfWeek(date).add(const Duration(days: 6));
+    return DateTime(sunday.year, sunday.month, sunday.day, 23, 59, 59);
+  }
+
   List<model.Task> get currentWeekTasks {
     final now = DateTime.now();
-    final startOfWeek = DateTime(
-      now.year,
-      now.month,
-      now.day,
-    ).subtract(Duration(days: now.weekday - 1));
-    final endOfWeek = startOfWeek.add(
-      const Duration(days: 6, hours: 23, minutes: 59, seconds: 59),
-    );
+    final start = _startOfWeek(now);
+    final end = _endOfWeek(now);
 
     return _allTasks.where((t) {
       final d = t.deadline;
-      return !d.isBefore(startOfWeek) && !d.isAfter(endOfWeek);
+      return !d.isBefore(start) && !d.isAfter(end);
     }).toList();
   }
 
   List<model.Task> get previousWeekTasks {
     final now = DateTime.now();
-    final startOfPrevWeek = DateTime(
-      now.year,
-      now.month,
-      now.day,
-    ).subtract(Duration(days: now.weekday - 1 + 7));
-    final endOfPrevWeek = startOfPrevWeek.add(
-      const Duration(days: 6, hours: 23, minutes: 59, seconds: 59),
-    );
+    final start = _startOfWeek(now).subtract(const Duration(days: 7));
+    final end = _endOfWeek(now).subtract(const Duration(days: 7));
 
     return _allTasks.where((t) {
       final d = t.deadline;
-      return !d.isBefore(startOfPrevWeek) && !d.isAfter(endOfPrevWeek);
+      return !d.isBefore(start) && !d.isAfter(end);
     }).toList();
   }
 
