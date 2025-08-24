@@ -17,4 +17,33 @@ lib/
 └── main.dart
 ```
 
+Features
+
+- Add, edit and delete tasks
+- Mark tasks as completed
+- Weekly statistics of completed vs pending tasks (pie chart)
+- Local notifications 30 minutes before task deadline
+- Weather information based on current location
+- Clean MVVM architecture with Provider
+- Drift (SQLite) as local database
+
 ## Getting Started
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-username/personal_task_manager.git
+   cd personal_task_manager
+   flutter pub get
+   ```
+
+2. **Set up environment variables**
+
+   ```bash
+   WEATHER_API_KEY=your_openweather_api_key
+   ```
+
+3. **Run app**
+   ```bash
+   flutter run
+   ```
