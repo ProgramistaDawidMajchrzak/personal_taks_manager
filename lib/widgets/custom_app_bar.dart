@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:personal_task_manager/widgets/app_bar_text.dart';
-import 'package:personal_task_manager/widgets/weather_appbar_view.dart';
-import 'package:provider/provider.dart';
-import '../viewmodels/weather_viewmodel.dart';
-import 'package:intl/intl.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -45,25 +41,35 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          leading:
+              currentIndex == 2 || currentIndex == 3
+                  ? Padding(
+                    padding: EdgeInsets.only(left: 4, top: 8),
+                    child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: SvgPicture.asset(
+                        "assets/images/cancel.svg",
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                  )
+                  : null,
           title: Builder(
             builder: (context) {
               switch (currentIndex) {
-                case 0:
-                  final weatherVM = context.watch<WeatherViewModel>();
-                  if (weatherVM.isLoading) {
-                    return const CircularProgressIndicator(color: Colors.white);
-                  }
-                  if ((weatherVM.error != null) ||
-                      (weatherVM.weather == null)) {
-                    final now = DateTime.now();
-                    final formattedDate = DateFormat('MMMM d, y').format(now);
-                    return AppBarText(text: formattedDate);
-                  }
-                  return WeatherInfo(weatherVM: weatherVM);
                 case 1:
-                  return Center(child: AppBarText(text: "Statistics"));
+                  return AppBarText(text: "Statistics");
                 case 2:
-                  return Center(child: AppBarText(text: "Add new Task"));
+                  return Padding(
+                    padding: EdgeInsets.only(left: 4, top: 8),
+                    child: AppBarText(text: "Add new Task"),
+                  );
+                case 3:
+                  return Padding(
+                    padding: EdgeInsets.only(left: 4, top: 8),
+                    child: AppBarText(text: "Edit Task"),
+                  );
                 default:
                   return const SizedBox.shrink();
               }

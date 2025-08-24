@@ -7,7 +7,6 @@ class TaskService {
 
   TaskService(this._taskDao);
 
-  //add
   Future<int> addTask({
     required String title,
     required int category,
@@ -24,6 +23,10 @@ class TaskService {
     );
   }
 
+  Future<void> updateTask(Task task) async {
+    await _taskDao.updateTask(task);
+  }
+
   //get sorted by deadline
   Stream<List<Task>> watchAllTasksSorted() {
     return (_taskDao.watchAllTasks()..map(
@@ -31,11 +34,9 @@ class TaskService {
     ));
   }
 
-  //toggle isDone
   Future<void> toggleDone(Task task) {
     return _taskDao.updateTask(task.copyWith(isDone: !task.isDone));
   }
 
-  //del
   Future<void> deleteTask(int id) => _taskDao.deleteTask(id);
 }

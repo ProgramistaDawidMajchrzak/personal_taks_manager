@@ -38,9 +38,8 @@ class CustomBottomNavBar extends StatelessWidget {
           PageRouteBuilder(
             pageBuilder: (_, __, ___) => targetScreen,
             transitionsBuilder: (_, animation, __, child) {
-              // Fade + Slide
               final offsetAnim = Tween<Offset>(
-                begin: const Offset(0.0, 0.1), // lekko w dół
+                begin: const Offset(0.0, 0.1),
                 end: Offset.zero,
               ).animate(animation);
 
