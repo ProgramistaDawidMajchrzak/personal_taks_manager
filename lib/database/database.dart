@@ -21,6 +21,70 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (m) async {
+      await m.createAll();
+
+      await into(tasks).insert(
+        TasksCompanion.insert(
+          title: 'Go shopping',
+          category: 1,
+          deadline: DateTime.now().subtract(const Duration(days: 6)),
+        ),
+      );
+
+      await into(tasks).insert(
+        TasksCompanion.insert(
+          title: 'Church',
+          category: 3,
+          deadline: DateTime.now().subtract(const Duration(days: 10)),
+          isDone: Value(true),
+        ),
+      );
+
+      await into(tasks).insert(
+        TasksCompanion.insert(
+          title: 'Do gym',
+          category: 2,
+          deadline: DateTime.now().subtract(const Duration(days: 9)),
+        ),
+      );
+
+      await into(tasks).insert(
+        TasksCompanion.insert(
+          title: 'Work on school project',
+          category: 1,
+          deadline: DateTime.now().subtract(const Duration(days: 4)),
+          isDone: Value(true),
+        ),
+      );
+
+      await into(tasks).insert(
+        TasksCompanion.insert(
+          title: 'Date with girlfriend',
+          category: 1,
+          deadline: DateTime.now().subtract(const Duration(days: 3)),
+          isDone: Value(true),
+        ),
+      );
+      await into(tasks).insert(
+        TasksCompanion.insert(
+          title: 'Hire David :)',
+          category: 3,
+          deadline: DateTime.now().subtract(const Duration(days: 1)),
+        ),
+      );
+      await into(tasks).insert(
+        TasksCompanion.insert(
+          title: 'Clean my desk',
+          category: 2,
+          deadline: DateTime.now().subtract(const Duration(days: 8)),
+        ),
+      );
+    },
+  );
+
   static QueryExecutor _openConnection() {
     return driftDatabase(
       name: 'tasks_database',
