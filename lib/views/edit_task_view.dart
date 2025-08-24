@@ -79,7 +79,7 @@ class _EditTaskViewState extends State<EditTaskView> {
                   }
                   final vm = context.read<TaskViewModel>();
                   await vm.updateTask(
-                    id: widget.task.id!,
+                    id: widget.task.id,
                     title: _titleController.text.trim(),
                     category: _selectedCategory,
                     deadline: _selectedDeadline!,
